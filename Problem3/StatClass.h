@@ -19,6 +19,7 @@ public:
     void setMean(float mean) {this->mean = mean;}
     void setMedian(float median) {this->median = median;}
     void setMode(SimpleVector<int> mode) {this->mode = mode;}
+    void print() const;
 private:
     float mean;
     float median;

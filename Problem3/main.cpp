@@ -21,7 +21,7 @@ void printVec(SimpleVector<int>&, int=100);
 float median(const SimpleVector<int>&);
 SimpleVector<int> mode(const SimpleVector<int>&);
 int max(const map<int, int>&);
-
+StatClass *stat(SimpleVector<int>);
 
 int main(int argc, const char * argv[]) {
     cout << "Enter the size of the array: ";
@@ -39,18 +39,12 @@ int main(int argc, const char * argv[]) {
     cin >> perLine;
     
     fill(v, size, mod);
-    
     printVec(v, perLine);
     
-    if (!v.empty()) {
-        cout<<"Mean: "<<accumulate(v.begin(), v.end(), 0.0) / v.size()
-        << endl;
-        cout << "Median: " << median(v) << endl;
-        SimpleVector<int> modes = mode(v);
-        printVec(modes);
-    }
-    else
-        cout << "No data was input\n";
+    StatClass *sc = stat(v);
+    sc->print();
+    
+
 
     return 0;
 }
@@ -116,4 +110,17 @@ int max(const map<int,int>& m) {
         }
     }
     return max;
+}
+
+StatClass *stat(SimpleVector<int> x) {
+    StatClass *sc = new StatClass;
+    if (!x.empty()) {
+        sc->setMean(accumulate(x.begin(), x.end(), 0.0) / x.size());
+        sc->setMedian(median(x));
+        sc->setMode(mode(x));
+    }
+    else
+        cout << "No data was input\n";
+    
+    return sc;
 }

@@ -63,7 +63,7 @@ public:
     T pop();
     
     // return true if array if empty
-    bool empty() {return !aPtr;}
+    bool empty() const {return !aPtr;}
     
     iterator begin() {return aPtr;}
     const_iterator begin() const {return aPtr;}
