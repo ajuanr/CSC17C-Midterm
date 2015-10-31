@@ -9,13 +9,18 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <map>
 
 #include "LnkdLst.hpp"
+
+using namespace std;
 
 void fill(LnkdLst<int>&, int, int = 9);
 void printLst(LnkdLst<int>&, int=100);
 float mean(LnkdLst<int>&);
 float median(LnkdLst<int>&);
+int max(const map<int, int>&);
+LnkdLst<int> mode(LnkdLst<int>&);
 
 int main(int argc, const char * argv[]) {
     cout << "Enter the size of the array: ";
@@ -36,6 +41,9 @@ int main(int argc, const char * argv[]) {
     printLst(ll, perLine);
     cout << "Median: " << median(ll) << endl;
     cout << "Mean: " << mean(ll) << endl;
+    
+    LnkdLst<int> modes = mode(ll);
+    //mode(ll);
     return 0;
 }
 
@@ -73,4 +81,38 @@ float mean(LnkdLst<int>& ll) {
         sum += ll.get(i);
     }
     return sum/ll.getSize();
+}
+
+int max(const map<int,int>& m) {
+    int max = m.begin()->second;
+    for (map<int, int>::const_iterator it= m.begin(); it!= m.end(); ++it) {
+        if (it->second > max) {
+            max = it->second;
+        }
+    }
+    return max;
+}
+
+LnkdLst<int> mode(LnkdLst<int>& v) {
+    LnkdLst<int> out;
+    map<int, int> modes;
+    for(int i = 0; i != v.getSize(); ++i){
+        modes[v.get(i)]++;
+    }
+    
+    // prints out key with its frequency
+//  for (map<int,int>::const_iterator it = modes.begin(); it!=modes.end(); ++it)
+//      cout << it->first << " " << it->second << endl;
+    
+    int maxVal = max(modes);
+    
+    if (maxVal > 1){
+        for (map<int, int>::iterator it = modes.begin();
+             it != modes.end(); ++it) {
+            if (it->second == maxVal) {
+                out.append(it->first);
+            }
+        }
+    }
+    return out;
 }
