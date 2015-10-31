@@ -52,7 +52,7 @@ public:
     // Destructor declaration
     ~SimpleVector();
     
-    bool empty() { return !aptr;}
+    bool empty() { return aptr;}
     
     // Accessor to return the array size
     int size() const { return current; }
@@ -122,7 +122,8 @@ SimpleVector<T>::~SimpleVector()
 
 template<class T>
 void SimpleVector<T>::create(int s) {
-    arraySize = current = s;
+    arraySize = s;
+    current = 0;
     // Allocate memory for the array.
     try
     {
@@ -147,22 +148,14 @@ void SimpleVector<T>::expand() {
     // temporary SimpleArray that holds a copy of the original array
     SimpleVector<T> temp = *this;
     
-    if(!empty()){
        create(temp.size()*2); // create a new array with double the size
     
        // copy the elements over
        for (int i = 0; i != temp.size(); ++i) {
           *(aptr + i) = temp[i];
        }
-    }
-    // empty vector, create new vector space for 10 elements
-    else {
-        create(10);
-       }
-    
-    // move the current index back to original position
-    current /= 2;
-        
+        // move the current index back to original position
+    current = temp.current;
 }
 
 //*******************************************************
@@ -173,12 +166,19 @@ void SimpleVector<T>::expand() {
 template <class T>
 void SimpleVector<T>::push_back(int n) {
     // check you're not past the last element
-    if (current == arraySize){
+    if (empty()) {
+        cout << "Array was empty\n";
+        create(10);
+    }
+    else if (current == arraySize){
         expand();
     }
+    else {
+
     // push the new element
     *(aptr+current) = n;
     ++current;
+        }
 }
 
 //*****************************************
