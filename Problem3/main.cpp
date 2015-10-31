@@ -12,15 +12,14 @@
 #include <numeric>
 
 #include "SimpleVector.h"
+#include "StatClass.h"
 
-
-//void fill(SimpleVector<int>&, int=10);
-//void print(SimpleVector<int>&);
+using namespace std;
 
 void fill(SimpleVector<int>&, int, int = 9);
 void printVec(SimpleVector<int>&, int=100);
 float median(const SimpleVector<int>&);
-void mode(const SimpleVector<int>&);
+SimpleVector<int> mode(const SimpleVector<int>&);
 int max(const map<int, int>&);
 
 
@@ -47,7 +46,8 @@ int main(int argc, const char * argv[]) {
         cout<<"Mean: "<<accumulate(v.begin(), v.end(), 0.0) / v.size()
         << endl;
         cout << "Median: " << median(v) << endl;
-        mode(v);
+        SimpleVector<int> modes = mode(v);
+        printVec(modes);
     }
     else
         cout << "No data was input\n";
@@ -83,7 +83,8 @@ float median(const SimpleVector<int>& in) {
         return v[mid];
 }
 
-void mode(const SimpleVector<int>& v) {
+SimpleVector<int> mode(const SimpleVector<int>& v) {
+    SimpleVector<int> out;
     map<int, int> modes;
     for(SimpleVector<int>::const_iterator it= v.begin();
         it != v.end(); ++it) {
@@ -95,23 +96,16 @@ void mode(const SimpleVector<int>& v) {
 //        cout << it->first << " " << it->second << endl;
     
     int maxVal = max(modes);
-    
-    // if max is 1, then no number is repeated
-    if (maxVal==1) {
-        cout << "Mode: {0}";
-    }
-    
-    else {
-        cout << "Mode: { ";
+
+    if (maxVal > 1){
         for (map<int, int>::iterator it = modes.begin();
              it != modes.end(); ++it) {
             if (it->second == maxVal) {
-                cout << it->first << " ";
+                out.push_back(it->first);
             }
         }
-        cout << "}\n";
     }
-    cout << endl;
+    return out;
 }
 
 int max(const map<int,int>& m) {
