@@ -25,18 +25,32 @@ int max(const map<int, int>&);
 
 
 int main(int argc, const char * argv[]) {
-    SimpleVector<int> simple;
-    
-    cout << "Enter size of the vector: ";
-    int size=10;
+    cout << "Enter the size of the array: ";
+    int size;
     cin >> size;
-    fill(simple, size);
-    printVec(simple);
+    SimpleVector<int> v;
+    // number for random number generator
+    cout << "What is the largest value to use: ";
+    int mod;
+    cin >> mod;
     
-    cout << "Median: " << median(simple) << endl;
-    cout<<"Mean: "<<accumulate(simple.begin(),simple.end(),0.0) / simple.size()
-    << endl;
-    mode(simple);
+    // numbers to print per line
+    cout << "How many numbers to print per line: ";
+    int perLine;
+    cin >> perLine;
+    
+    fill(v, size, mod);
+    
+    printVec(v, perLine);
+    
+    if (!v.empty()) {
+        cout<<"Mean: "<<accumulate(v.begin(), v.end(), 0.0) / v.size()
+        << endl;
+        cout << "Median: " << median(v) << endl;
+        mode(v);
+    }
+    else
+        cout << "No data was input\n";
 
     return 0;
 }
@@ -75,9 +89,10 @@ void mode(const SimpleVector<int>& v) {
         it != v.end(); ++it) {
         modes[*it]++;
     }
-    
-    for (map<int,int>::const_iterator it = modes.begin(); it!=modes.end(); ++it)
-        cout << it->first << " " << it->second << endl;
+
+    // prints out key with its frequency
+//    for (map<int,int>::const_iterator it = modes.begin(); it!=modes.end(); ++it)
+//        cout << it->first << " " << it->second << endl;
     
     int maxVal = max(modes);
     
