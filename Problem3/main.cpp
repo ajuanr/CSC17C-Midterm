@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
     int size;
     cin >> size;
     SimpleVector<int> v;
+    cout << v.empty() << endl;
     // number for random number generator
     cout << "What is the largest value to use: ";
     int mod;
@@ -39,17 +40,19 @@ int main(int argc, const char * argv[]) {
     cin >> perLine;
     
     fill(v, size, mod);
-    cout << v[1] << endl;
+    cout << v.size() << " " << v.empty() << endl;
+    v.print();
+//    cout << v.getElementAt(0) << endl;
   //  print(v, perLine);
-//
-//    if (!v.empty()) {
-//        cout<<"Mean: "<<accumulate(v.begin(), v.end(), 0.0) / v.size()
-//        << endl;
-//        cout << "Median: " << median(v) << endl;
-//        mode(v);
-//    }
-//    else
-//        cout << "No data was input\n";
+
+    if (!v.empty()) {
+        cout<<"Mean: "<<accumulate(v.begin(), v.end(), 0.0) / v.size()
+        << endl;
+        cout << "Median: " << median(v) << endl;
+        mode(v);
+    }
+    else
+        cout << "No data was input\n";
     
     return 0;
 }

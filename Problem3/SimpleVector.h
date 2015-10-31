@@ -20,9 +20,8 @@ template <class T>
 class SimpleVector
 {
 public:
-    typedef T* iterator;
 private:
-    iterator aptr;          // To point to the allocated array
+    T* aptr;          // To point to the allocated array
     int current;      // points to one past last element pushed
     int arraySize;    // Number of elements in the array
     void memError();  // Handles memory allocation errors
@@ -32,7 +31,7 @@ private:
     void expand();    // double the size of the SimpleVector
     
 public:
- //   typedef T* iterator;
+    typedef T* iterator;
     typedef const T* const_iterator;
     
     iterator begin() { return aptr; }
@@ -53,11 +52,10 @@ public:
     // Destructor declaration
     ~SimpleVector();
     
-    bool empty() { return aptr;}
+    bool empty() { return !aptr;}
     
     // Accessor to return the array size
-    int size() const
-    { return current; } // changed from arraySize
+    int size() const { return current; }
     
     // Accessor to return a specific element
     T getElementAt(int position);
@@ -124,8 +122,7 @@ SimpleVector<T>::~SimpleVector()
 
 template<class T>
 void SimpleVector<T>::create(int s) {
-    arraySize = s;
-    current = s;
+    arraySize = current = s;
     // Allocate memory for the array.
     try
     {
