@@ -13,7 +13,9 @@
 #include "LnkdLst.hpp"
 
 void fill(LnkdLst<int>&, int, int = 9);
-void printVec(LnkdLst<int>&, int=100);
+void printLst(LnkdLst<int>&, int=100);
+float mean(LnkdLst<int>&);
+float median(LnkdLst<int>&);
 
 int main(int argc, const char * argv[]) {
     cout << "Enter the size of the array: ";
@@ -31,9 +33,8 @@ int main(int argc, const char * argv[]) {
     cin >> perLine;
     
     fill(ll, size, mod);
-    printVec(ll, perLine);
-    ll.sort();
-    ll.print();
+    printLst(ll, perLine);
+    cout << "Median: " << median(ll) << endl;
     
     return 0;
 }
@@ -46,11 +47,26 @@ void fill(LnkdLst<int>& ll, int size, int mod) {
     }
 }
 
-void printVec(LnkdLst<int>& ll, int p) {
+void printLst(LnkdLst<int>& ll, int p) {
     for (int i = 0; i != ll.getSize(); ++i) {
         cout << ll.get(i) << " ";
         if (i % p == p-1)
             cout << endl;
     }
     cout << endl;
+}
+
+float median(LnkdLst<int>& in) {
+    LnkdLst<int> v = in;
+    v.sort();
+    int mid = v.getSize()/2;
+    if (v.getSize() %2 == 0){
+        return (v.get(mid) + v.get(mid-1))/2.0;
+    }
+    else
+        return v.get(mid);
+}
+
+float mean(LnkdLst<int>&) {
+    
 }
