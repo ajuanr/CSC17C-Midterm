@@ -23,9 +23,7 @@ public:
     void prepend(T);
     string toString();
     virtual ~LnkdLst();
-    
-    
-    
+
     void dltLast();
     void dltHead();
     void remove(T);
