@@ -35,7 +35,7 @@ int main(int argc, const char * argv[]) {
     fill(ll, size, mod);
     printLst(ll, perLine);
     cout << "Median: " << median(ll) << endl;
-    
+    cout << "Mean: " << mean(ll) << endl;
     return 0;
 }
 
@@ -67,6 +67,10 @@ float median(LnkdLst<int>& in) {
         return v.get(mid);
 }
 
-float mean(LnkdLst<int>&) {
-    
+float mean(LnkdLst<int>& ll) {
+    float sum = 0.0;
+    for (int i = 0; i != ll.getSize(); ++i) {
+        sum += ll.get(i);
+    }
+    return sum/ll.getSize();
 }
