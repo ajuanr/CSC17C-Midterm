@@ -19,9 +19,8 @@ using namespace std;
 template <class T>
 class SimpleVector
 {
-public:
 private:
-    T* aptr;          // To point to the allocated array
+    T *aptr;          // To point to the allocated array
     int current;      // points to one past last element pushed
     int arraySize;    // Number of elements in the array
     void memError();  // Handles memory allocation errors
@@ -31,14 +30,6 @@ private:
     void expand();    // double the size of the SimpleVector
     
 public:
-    typedef T* iterator;
-    typedef const T* const_iterator;
-    
-    iterator begin() { return aptr; }
-    const_iterator begin() const { return aptr; };
-    iterator end() { return aptr+current;}
-    const_iterator end() const { return aptr+current;};
-    
     // Default constructor
     SimpleVector()
     { aptr = 0; arraySize = 0; current=0;}
@@ -52,10 +43,9 @@ public:
     // Destructor declaration
     ~SimpleVector();
     
-    bool empty() { return aptr;}
-    
     // Accessor to return the array size
-    int size() const { return current; }
+    int size() const
+    { return current; } // changed from arraySize
     
     // Accessor to return a specific element
     T getElementAt(int position);
@@ -79,10 +69,7 @@ public:
 //***********************************************************
 
 template <class T>
-SimpleVector<T>::SimpleVector(int s)
-{
-    create(s);
-}
+SimpleVector<T>::SimpleVector(int s){ create(s); }
 
 //*******************************************
 // Copy Constructor for SimpleVector class. *
@@ -123,7 +110,7 @@ SimpleVector<T>::~SimpleVector()
 template<class T>
 void SimpleVector<T>::create(int s) {
     arraySize = s;
-    current = 0;
+    current = 0; // added by me
     // Allocate memory for the array.
     try
     {
@@ -148,14 +135,15 @@ void SimpleVector<T>::expand() {
     // temporary SimpleArray that holds a copy of the original array
     SimpleVector<T> temp = *this;
     
-       create(temp.size()*2); // create a new array with double the size
+    create(temp.size()*2); // create a new array with double the size
     
-       // copy the elements over
-       for (int i = 0; i != temp.size(); ++i) {
-          *(aptr + i) = temp[i];
-       }
-        // move the current index back to original position
-    current = temp.current;
+    // copy the elements over
+    for (int i = 0; i != temp.size(); ++i) {
+        *(aptr + i) = temp[i];
+    }
+    
+    // move the current index back to original position
+    current /= 2;
 }
 
 //*******************************************************
@@ -165,20 +153,14 @@ void SimpleVector<T>::expand() {
 
 template <class T>
 void SimpleVector<T>::push_back(int n) {
+    cout << "current: " << current << " arraySize: " << arraySize << endl;
     // check you're not past the last element
-    if (empty()) {
-        cout << "Array was empty\n";
-        create(10);
-    }
-    else if (current == arraySize){
+    if (current == arraySize){
         expand();
     }
-    else {
-
     // push the new element
     *(aptr+current) = n;
     ++current;
-        }
 }
 
 //*****************************************
