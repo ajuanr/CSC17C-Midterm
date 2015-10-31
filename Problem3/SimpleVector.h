@@ -165,7 +165,8 @@ void SimpleVector<T>::expand() {
 template <class T>
 void SimpleVector<T>::push_back(int n) {
     // pushing back onto empty array, create a new one
-    if(empty()) {
+    cout << "Arraysize: " << arraySize<< endl;
+    if(arraySize==0) {
         create(10);
     }
     // check you're not past the last element
