@@ -44,7 +44,7 @@ int main(int argc, const char * argv[]) {
     StatClass *sc = stat(v);
     sc->print();
     
-
+    delete sc;
 
     return 0;
 }
