@@ -20,13 +20,13 @@ int main(int argc, const char * argv[]) {
     
     fill(simple);
     print(simple);
-    
+
     return 0;
 }
 
 void fill(SimpleVector<int>& s, int size) {
     for (int i=0; i != size; ++i) {
-        s.push_back(rand()%10);
+        s.push_back(rand()%10+1);
     }
 }
 

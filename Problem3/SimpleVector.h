@@ -20,9 +20,9 @@ template <class T>
 class SimpleVector
 {
 private:
-    T *aptr;          // To point to the allocated array
-    int current;      // points to one past last element pushed
-    int arraySize;    // Number of elements in the array
+    T *aPtr;          // To point to the allocated array
+    int avail;        // points to one past last element pushed
+    int arraySize;    // Total number of elements in the array
     void memError();  // Handles memory allocation errors
     void subError();  // Handles subscripts out of range
     
@@ -30,9 +30,12 @@ private:
     void expand();    // double the size of the SimpleVector
     
 public:
+    typedef T* iterator;
+    typedef const T* const_iterator;
+    
     // Default constructor
     SimpleVector()
-    { aptr = 0; arraySize = 0; current=0;}
+    { aPtr = 0; arraySize = 0; avail=0;}
     
     // Constructor declaration
     SimpleVector(int);
@@ -45,7 +48,7 @@ public:
     
     // Accessor to return the array size
     int size() const
-    { return current; } // changed from arraySize
+    { return avail; } // changed from arraySize
     
     // Accessor to return a specific element
     T getElementAt(int position);
@@ -58,6 +61,14 @@ public:
     
     // Remove an element from array
     T pop();
+    
+    // return true if array if empty
+    bool empty() {return !aPtr;}
+    
+    iterator begin() { return aPtr;}
+    const_iterator begin() const { return aPtr;}
+    iterator end() { return aPtr+avail;}
+    
     
     void print() const;
     
@@ -80,16 +91,16 @@ SimpleVector<T>::SimpleVector(const SimpleVector &obj)
 {
     // Copy the array size.
     arraySize = obj.arraySize;
-    current = obj.current; // added by me
+    avail = obj.avail; // added by me
     
     // Allocate memory for the array.
-    aptr = new T [arraySize];
-    if (aptr == 0)
+    aPtr = new T [arraySize];
+    if (aPtr == 0)
         memError();
     
     // Copy the elements of obj's array.
     for(int count = 0; count < arraySize; count++)
-        *(aptr + count) = *(obj.aptr + count);
+        *(aPtr + count) = *(obj.aPtr + count);
 }
 
 //**************************************
@@ -100,7 +111,7 @@ template <class T>
 SimpleVector<T>::~SimpleVector()
 {
     if (arraySize > 0)
-        delete [] aptr;
+        delete [] aPtr;
 }
 
 //************************
@@ -110,11 +121,11 @@ SimpleVector<T>::~SimpleVector()
 template<class T>
 void SimpleVector<T>::create(int s) {
     arraySize = s;
-    current = 0; // added by me
+    avail = 0; // added by me
     // Allocate memory for the array.
     try
     {
-        aptr = new T [s];
+        aPtr = new T [s];
     }
     catch (bad_alloc)
     {
@@ -123,7 +134,7 @@ void SimpleVector<T>::create(int s) {
     
     // Initialize the array.
     for (int count = 0; count < arraySize; count++)
-        *(aptr + count) = 0;
+        *(aPtr + count) = 0;
 }
 
 //*************************************************
@@ -139,11 +150,11 @@ void SimpleVector<T>::expand() {
     
     // copy the elements over
     for (int i = 0; i != temp.size(); ++i) {
-        *(aptr + i) = temp[i];
+        *(aPtr + i) = temp[i];
     }
     
-    // move the current index back to original position
-    current /= 2;
+    // move the avail index back to original position
+    avail /= 2;
 }
 
 //*******************************************************
@@ -153,14 +164,17 @@ void SimpleVector<T>::expand() {
 
 template <class T>
 void SimpleVector<T>::push_back(int n) {
-    cout << "current: " << current << " arraySize: " << arraySize << endl;
+    // pushing back onto empty array, create a new one
+    if(empty()) {
+        create(10);
+    }
     // check you're not past the last element
-    if (current == arraySize){
+    if (avail == arraySize){
         expand();
     }
     // push the new element
-    *(aptr+current) = n;
-    ++current;
+    *(aPtr+avail) = n;
+    ++avail;
 }
 
 //*****************************************
@@ -169,15 +183,15 @@ void SimpleVector<T>::push_back(int n) {
 
 template <class T>
 T SimpleVector<T>::pop() {
-    --current;
+    --avail;
     
     // attempting to pop from empty array
-    if (current < 0) {
+    if (avail < 0) {
         subError();
     }
 
     // elements available to pop
-    T popped = *(aptr+current);
+    T popped = *(aPtr+avail);
     return popped;
 }
 
@@ -187,8 +201,8 @@ T SimpleVector<T>::pop() {
 
 template <class T>
 void SimpleVector<T>::print() const {
-    for (int i = 0; i != current; ++i) {
-        cout << *(aptr+i) << " ";
+    for (int i = 0; i != avail; ++i) {
+        cout << *(aPtr+i) << " ";
     }
     cout << endl;
 }
@@ -228,7 +242,7 @@ T SimpleVector<T>::getElementAt(int sub)
 {
     if (sub < 0 || sub >= arraySize)
         subError();
-    return aptr[sub];
+    return aPtr[sub];
 }
 
 //*******************************************************
@@ -242,7 +256,7 @@ T &SimpleVector<T>::operator[](const int &sub)
 {
     if (sub < 0 || sub >= arraySize)
         subError();
-    return aptr[sub];
+    return aPtr[sub];
 }
 
 #endif
