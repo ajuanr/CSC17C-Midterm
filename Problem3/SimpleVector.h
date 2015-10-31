@@ -65,10 +65,10 @@ public:
     // return true if array if empty
     bool empty() {return !aPtr;}
     
-    iterator begin() { return aPtr;}
-    const_iterator begin() const { return aPtr;}
-    iterator end() { return aPtr+avail;}
-    
+    iterator begin() {return aPtr;}
+    const_iterator begin() const {return aPtr;}
+    iterator end() {return aPtr+avail;}
+    const_iterator end() const {return aPtr+avail;}
     
     void print() const;
     
@@ -149,12 +149,11 @@ void SimpleVector<T>::expand() {
     create(temp.size()*2); // create a new array with double the size
     
     // copy the elements over
-    for (int i = 0; i != temp.size(); ++i) {
+    for (int i = 0; i != temp.size(); ++i)
         *(aPtr + i) = temp[i];
-    }
     
     // move the avail index back to original position
-    avail /= 2;
+    avail = temp.size();
 }
 
 //*******************************************************
@@ -164,15 +163,12 @@ void SimpleVector<T>::expand() {
 
 template <class T>
 void SimpleVector<T>::push_back(int n) {
-    // pushing back onto empty array, create a new one
-    cout << "Arraysize: " << arraySize<< endl;
-    if(arraySize==0) {
-        create(10);
-    }
+    // vector has not been initialized yet
+    if(empty()) create(10);
+    
     // check you're not past the last element
-    if (avail == arraySize){
-        expand();
-    }
+    if (avail == arraySize) expand();
+    
     // push the new element
     *(aPtr+avail) = n;
     ++avail;
@@ -187,9 +183,8 @@ T SimpleVector<T>::pop() {
     --avail;
     
     // attempting to pop from empty array
-    if (avail < 0) {
+    if (avail < 0)
         subError();
-    }
 
     // elements available to pop
     T popped = *(aPtr+avail);
