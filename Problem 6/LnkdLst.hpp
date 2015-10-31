@@ -38,6 +38,7 @@ public:
     T extract(int);
     
     void print();
+    void sort();
     
     LnkdLst& operator=(LnkdLst&);
     
@@ -356,6 +357,28 @@ void LnkdLst<T>::print() {
         cout << endl;
     }
 }
+
+template<class T>
+void LnkdLst<T>::sort() {
+    if (head) {
+        worker=head;
+        Node *prev=worker;
+        Node *current = prev;
+        do {
+            prev=worker;
+            current = worker;
+            while (prev=prev->next) {
+                if (current->data > prev->data) {
+                    T temp = current->data;
+                    current->data = prev->data;
+                    prev->data = temp;
+                }
+            }
+//            current=current->next;
+        } while (worker=worker->next);
+    }
+}
+
 template<class T>
 LnkdLst<T>& LnkdLst<T>::operator=(LnkdLst &rhs) {
     // guard against self-assignment

@@ -32,6 +32,8 @@ int main(int argc, const char * argv[]) {
     
     fill(ll, size, mod);
     printVec(ll, perLine);
+    ll.sort();
+    ll.print();
     
     return 0;
 }
