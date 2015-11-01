@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     
     fill(*ll, 10, 9);
     printLst(*ll);
-    cout << ll->inList(2) << endl;
+    cout << ll->inList(9) << endl;
     printLst(*ll);
     
     return 0;
