@@ -37,6 +37,7 @@ public:
     void insertAfter(int, T);
     T extract(int);
     
+    bool empty() { return !head;}
     void print();
     void sort();
     

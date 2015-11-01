@@ -22,6 +22,7 @@ float mean(LnkdLst<int>&);
 float median(LnkdLst<int>&);
 int max(const map<int, int>&);
 void mode(LnkdLst<int>&, LnkdLst<int>&);
+StatClass *stat(LnkdLst<int>);
 
 int main(int argc, const char * argv[]) {
     cout << "Enter the size of the array: ";
@@ -40,12 +41,9 @@ int main(int argc, const char * argv[]) {
     
     fill(ll, size, mod);
     printLst(ll, perLine);
-    cout << "Median: " << median(ll) << endl;
-    cout << "Mean: " << mean(ll) << endl;
     
-    LnkdLst<int> modes;
-    mode(ll, modes);
-    printLst(modes);
+    StatClass *sc = stat(ll);
+    sc->print();
     
     //mode(ll);
     return 0;
@@ -119,4 +117,19 @@ void mode(LnkdLst<int>& v, LnkdLst<int>& out) {
         }
     }
     //return out;
+}
+
+StatClass *stat(LnkdLst<int> x) {
+    StatClass *sc = new StatClass();
+    LnkdLst<int> l;
+    if (!x.empty()) {
+        sc->setMean(mean(x));
+        sc->setMedian(median(x));
+        mode(x,l);
+        sc->setMode(l);
+    }
+    else
+        cout << "No data was input\n";
+    
+    return sc;
 }

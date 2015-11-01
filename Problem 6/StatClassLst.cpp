@@ -15,10 +15,8 @@ using namespace std;
 
 // initial mean and median with the values of zero
 // default constructor for LnkdLst will be used for initialzization
-StatClass::StatClass(LnkdLst<int> data): mean(0), median(0)
-{
-    this->data = data;
-};
+StatClass::StatClass(): mean(0), median(0){}
+
 void StatClass::print() {
     if (mean==0) {
         cout << "No data was input" << endl;

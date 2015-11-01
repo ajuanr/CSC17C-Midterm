@@ -14,7 +14,7 @@
 
 class StatClass{
 public:
-    StatClass(LnkdLst<int>);
+    StatClass();
     
     void setMean(float mean) {this->mean = mean;}
     void setMedian(float median) {this->median = median;}
@@ -24,7 +24,6 @@ private:
     float mean;
     float median;
     LnkdLst<int> mode;
-    LnkdLst<int> data;
 };
 
 
