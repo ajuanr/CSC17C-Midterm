@@ -199,7 +199,6 @@ void LnkdLst<T>::dltCurrent(Node *current) {
         if (current == head) dltHead();
         else if (!current->next) dltLast();
         else dltMid(current);
-        --size;
     }
 }
 
@@ -293,7 +292,7 @@ void LnkdLst<T>::insertBefore(int index, T val) {
         // index out of range
         if(index>=this->size || index < 0) return;
         if(index==0) { prepend(val); }
-        else {//if(index>0 && index<size) {
+        else {
             int i = 0;
             do {
                 prev = worker;

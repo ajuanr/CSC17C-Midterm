@@ -20,8 +20,7 @@ int main(int argc, const char * argv[]) {
     
     fill(*ll, 10, 9);
     printLst(*ll);
-    //cout << ll->inList(7) << endl;
-    ll->insertBefore(0, 0);
+    cout << ll->inList(2) << endl;
     printLst(*ll);
     
     return 0;
@@ -29,7 +28,7 @@ int main(int argc, const char * argv[]) {
 
 void fill(LnkdLst<int>& ll, int size, int mod) {
     // use current time as seed for random number generator
-    srand(static_cast<unsigned int>(time(0)));
+    //srand(static_cast<unsigned int>(time(0)));
     for (int i = 0; i != size; ++i) {
         ll.append(rand() % mod + 1);
     }
