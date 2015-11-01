@@ -20,7 +20,7 @@ void printLst(LnkdLst<int>&, int=100);
 float mean(LnkdLst<int>&);
 float median(LnkdLst<int>&);
 int max(const map<int, int>&);
-LnkdLst<int> mode(LnkdLst<int>&);
+void mode(LnkdLst<int>&, LnkdLst<int>&);
 
 int main(int argc, const char * argv[]) {
     cout << "Enter the size of the array: ";
@@ -42,7 +42,10 @@ int main(int argc, const char * argv[]) {
     cout << "Median: " << median(ll) << endl;
     cout << "Mean: " << mean(ll) << endl;
     
-    LnkdLst<int> modes = mode(ll);
+    LnkdLst<int> modes;
+    mode(ll, modes);
+    printLst(modes);
+    
     //mode(ll);
     return 0;
 }
@@ -93,8 +96,8 @@ int max(const map<int,int>& m) {
     return max;
 }
 
-LnkdLst<int> mode(LnkdLst<int>& v) {
-    LnkdLst<int> out;
+void mode(LnkdLst<int>& v, LnkdLst<int>& out) {
+//    LnkdLst<int> out;
     map<int, int> modes;
     for(int i = 0; i != v.getSize(); ++i){
         modes[v.get(i)]++;
@@ -114,5 +117,5 @@ LnkdLst<int> mode(LnkdLst<int>& v) {
             }
         }
     }
-    return out;
+    //return out;
 }

@@ -40,7 +40,7 @@ public:
     void print();
     void sort();
     
-    LnkdLst& operator=(LnkdLst&);
+    LnkdLst& operator=(const LnkdLst&);
     
 private:
     struct Node{
@@ -380,7 +380,7 @@ void LnkdLst<T>::sort() {
 }
 
 template<class T>
-LnkdLst<T>& LnkdLst<T>::operator=(LnkdLst &rhs) {
+LnkdLst<T>& LnkdLst<T>::operator=(const LnkdLst &rhs) {
     // guard against self-assignment
     if (&rhs != this) {
         Node *headLnk=new Node;
