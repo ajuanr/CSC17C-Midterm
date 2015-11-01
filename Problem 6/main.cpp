@@ -11,7 +11,8 @@
 #include <cstdlib>
 #include <map>
 
-#include "LnkdLst.hpp"
+//#include "LnkdLst.hpp"
+#include "StatClassLst.h"
 
 using namespace std;
 
