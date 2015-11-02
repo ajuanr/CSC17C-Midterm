@@ -16,10 +16,10 @@ int main() {
     cin >> angle;
     cout << "angle is: " << angle << endl;
     
-    cout << h(angle) << endl;
-    cout << g(angle) << endl;
-    cout << rTan(angle) << endl;
-    cout << tan(angle) << endl;
+    cout << "h(x) = " << h(angle) << endl;
+    cout << "g(x) = " << g(angle) << endl;
+    cout <<  "rTan(x) = " << rTan(angle) << endl;
+    cout <<  "System tan(x) = " << tan(angle) << endl;
     return 0;
 }
 
