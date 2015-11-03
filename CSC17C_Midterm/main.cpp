@@ -6,6 +6,7 @@
 //  Copyright © 2015 Juan. All rights reserved.
 //
 
+#include <algorithm>
 #include <iostream>
 #include <cmath>
 #include <ctime>
@@ -19,7 +20,7 @@
 
 using namespace std;
 
-//functios for problem1
+//functions for problem1
 SimpleVector<int>* top(SimpleVector<int>, int);
 
 // functions for problem 3
